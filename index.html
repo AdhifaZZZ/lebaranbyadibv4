@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+
+<!-- WAJIB AGAR RESPONSIVE HP -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ucapan Idul Fitri</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    text-align:center;
+    color:white;
+    overflow:hidden;
+    background: linear-gradient(-45deg,#2ecc71,#3498db);
+    background-size:400% 400%;
+    animation: bg 8s infinite;
+}
+@keyframes bg{
+    0%{background-position:0%}
+    50%{background-position:100%}
+    100%{background-position:0%}
+}
+
+/* FIREWORK */
+.firework{
+    position:fixed;
+    pointer-events:none;
+    z-index:999;
+}
+.particle{
+    position:absolute;
+    width:6px;height:6px;
+    border-radius:50%;
+    animation: ledak 1s ease-out forwards;
+}
+@keyframes ledak{
+    from{transform:translate(0,0);opacity:1;}
+    to{transform:translate(var(--x),var(--y));opacity:0;}
+}
+
+/* KETUPAT */
+.ketupat{
+    position:fixed;
+    width:60px;
+    animation: swing 5s infinite ease-in-out;
+}
+@keyframes swing{
+    0%{transform:translateY(-50px) rotate(-10deg);}
+    50%{transform:translateY(50vh) rotate(10deg);}
+    100%{transform:translateY(100vh) rotate(-10deg);}
+}
+
+/* GAMBAR */
+.flag{
+    width:250px;
+    max-width:80%;
+}
+
+/* ENVELOPE */
+.envelope{
+    width:120px;
+    cursor:pointer;
+    transition:0.5s;
+}
+.envelope.open{
+    transform:rotateX(180deg) scale(1.2);
+}
+
+/* TEXT */
+.arabic{
+    font-size:28px;
+    line-height:1.8;
+    font-weight:bold;
+}
+
+.typing{
+    font-size:22px;
+    border-right:3px solid white;
+    white-space:nowrap;
+    overflow:hidden;
+    margin:auto;
+    width:80%;
+    animation:typing 6s steps(60),blink 1s infinite;
+}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink{50%{border-color:transparent}}
+
+/* RESPONSIVE HP */
+@media (max-width:600px){
+
+    .arabic{
+        font-size:20px;
+        padding:0 10px;
+    }
+
+    .typing{
+        font-size:16px;
+        width:90%;
+    }
+
+    .envelope{
+        width:90px;
+    }
+
+    .ketupat{
+        width:40px;
+    }
+
+    .flag{
+        width:180px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    p{
+        font-size:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- KETUPAT -->
+<img src="ketupat.png" class="ketupat" style="left:10%">
+<img src="ketupat.png" class="ketupat" style="left:50%">
+<img src="ketupat.png" class="ketupat" style="left:80%">
+
+<!-- HALAMAN AWAL -->
+<div id="home">
+    <br><br>
+    <img src="adib.png" class="flag">
+
+    <div class="arabic">
+    تَقَبَّلَ اللَّهُ مِنَّا وَمِنكُمْ<br>
+    عِيدُ مُبَارَكْ<br>
+    كُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ<br>
+    مِنَ الْعَائِدِينَ وَالْفَائِزِينَ
+    </div>
+
+    <p>Klik amplop 🎁</p>
+    <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" id="env" class="envelope" onclick="buka()">
+</div>
+
+<!-- HALAMAN ISI -->
+<div id="isi" style="display:none">
+<h2>🎉 Pantun Lebaran 🎉</h2>
+
+<div class="typing">
+Angin sejuk di pagi hari,<br>
+Burung bernyanyi riang sekali.<br>
+Tiba saatnya Idul Fitri,<br>
+Mari saling memaafkan dengan hati suci. 💚<br>
+Pergi ke pasar membeli ketupat,<br>
+Tidak lupa membeli kue nastar.<br>
+Hari raya penuh rahmat,<br>
+Mohon maaf lahir dan batin ya sahabat tersayang 💚
+</div>
+</div>
+
+<script>
+// FIREWORK
+function fire(){
+    const f=document.createElement("div");
+    f.className="firework";
+    f.style.left=Math.random()*innerWidth+"px";
+    f.style.top=Math.random()*innerHeight+"px";
+
+    for(let i=0;i<60;i++){
+        let p=document.createElement("div");
+        p.className="particle";
+
+        let a=Math.random()*2*Math.PI;
+        let d=Math.random()*150;
+
+        p.style.setProperty("--x",Math.cos(a)*d+"px");
+        p.style.setProperty("--y",Math.sin(a)*d+"px");
+        p.style.background=`hsl(${Math.random()*360},100%,60%)`;
+
+        f.appendChild(p);
+    }
+
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1000);
+}
+setInterval(()=>{for(let i=0;i<3;i++)fire()},500);
+
+// ENVELOPE
+function buka(){
+    let e=document.getElementById("env");
+    e.classList.add("open");
+
+    setTimeout(()=>{
+        document.getElementById("home").style.display="none";
+        document.getElementById("isi").style.display="block";
+    },700);
+}
+</script>
+
+</body>
+</html>
